@@ -1,18 +1,25 @@
 package aes;
-
-
-
-
+//cipherBlock instance
 public class CipherBlock {
 	
+	//block matrix
 	private int[][] block;
 	
-	//test
 	
+	//cipherBlock constructor, a block is always a 4x4 matrix of bytes
 	CipherBlock(){
 		 this.block = new int[4][4];
 		 
 	}
+	
+	/*
+	 * mix_Columns() function 
+	 * - diffuses the plaintext into the ciphertext
+	 * 
+	 * diffuses each new ciphertext element of the round by matrix multiplication in GF(2^8) where the operation takes the form:
+	 * [u1(v1) XOR u2(v2) XOR u3(v3) XOR u4(v4)] over GF(2^8) m(x) as given for each entry in the matrix product. 
+	 * 
+	 * */
 	
 	public void mix_Columns() {
 		int[][] matrixFactor = {
@@ -37,6 +44,13 @@ public class CipherBlock {
 		
 	}
 	
+	/*
+	 * Helper methods to compute the diffused matrix product of the state matrix and the matrix factor 
+	 * operations are computed over a Galois Field of 2^8 where m(x) = prime polynomial x^8 + x^4 + x^3 + x + 1 or 100011011 base 2 
+	 * or 283 base 10. 
+	 * 
+	 * takes a row of the matrix factor and XORs the products of the scalars and byte elements of the appropriate column
+	 * to compute the entry in the product matrix. */
 	
 	private int matrix_GF_Mult_Op(int[] scalarRow, int[] stateColumn) {
 		for(int i = 0; i < scalarRow.length; i++) {
@@ -51,7 +65,7 @@ public class CipherBlock {
 		}
 		return this.mod_Prime_Poly((stateColumn[0]^stateColumn[1]^stateColumn[2]^stateColumn[3]));
 	}
-	
+	//every operation is computed over a GF(2^8) where m(x) = 283
 	private int mod_Prime_Poly(int value) {
 		if(value >= 256) {
 			return value^283;
@@ -61,7 +75,10 @@ public class CipherBlock {
 	}
 	
 	
-	
+	/*
+	 * shift_Rows() function
+	 * shift the appropriate rows by the appropriate circular shift per row in the state matrix
+	 * */
 	public void shift_Rows() {
 		//leave first row alone
 		
@@ -112,6 +129,7 @@ public class CipherBlock {
 		
 	}
 	
+	//getter and setter for state matrix byte entries
 	private int get_Byte(int row, int column){
 		return this.block[row][column];
 	}
