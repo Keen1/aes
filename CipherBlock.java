@@ -3,12 +3,12 @@ package aes;
 public class CipherBlock {
 	
 	//block matrix
-	private int[][] block;
+	private int[][] block = new int[4][4];;
 	
 	
 	//cipherBlock constructor, a block is always a 4x4 matrix of bytes
 	CipherBlock(){
-		 this.block = new int[4][4];
+		 
 		 
 	}
 	
@@ -129,6 +129,7 @@ public class CipherBlock {
 		
 	}
 	
+	
 	//getter and setter for state matrix byte entries
 	private int get_Byte(int row, int column){
 		return this.block[row][column];
@@ -137,6 +138,36 @@ public class CipherBlock {
 		this.block[row][column] = newByte;
 	}
 	
+	/*
+	 * test() methods
+	 * methods intended for testing and verifying results*/
 	
+	public void test_input(String inputPhrase) {
+		int count = 0;
+		for(int i = 0; i < this.block.length; i++) {
+			for(int k = 0; k < this.block[i].length; k++) {
+				this.block[k][i] = inputPhrase.charAt(count);
+				count++;
+			}
+			
+		}
+		
+	}
 	
+	public void test_Block() {
+		for(int i = 0; i < this.block.length; i++) {
+			System.out.println();
+			for(int k = 0; k < this.block[i].length; k++) {
+				String hexS = Integer.toHexString(this.block[i][k]);
+				if(hexS.length() == 1) {
+					String hexFull = "0";
+					hexFull += hexS;
+					hexS = hexFull;
+				}
+				hexS = hexS.toUpperCase();
+				System.out.print(hexS);
+				System.out.print(" ");
+			}
+		}
+	}
 }

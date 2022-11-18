@@ -1,10 +1,14 @@
 package aes;
 
+import aes.Key;
+import aes.CipherBlock;
 //cipher body
 public class AESCipher {
 	private String plaintext;
 	private String ciphertext;
 	private String key;
+	CipherBlock stateBlock = new CipherBlock();
+	Key k_Store;
 	private int[][] sBox = {
 			{99, 124, 119, 123, 242, 107, 111, 197, 48, 1, 103, 43, 254, 215, 171, 118},
 			{202, 130, 201, 125, 250, 89, 71, 240, 173, 212, 162, 175, 156, 164, 114, 192},
@@ -43,37 +47,20 @@ public class AESCipher {
 	//no param init
 	AESCipher(){
 		
-		this.plaintext = "";
+		this.plaintext = "testgkvn12388kln";
 		this.ciphertext = "";
 		this.key = "";
+		this.k_Store = new Key("abvdo10alznl>8?m");
+		
 	}
 	
 	//encrypt method
 	//builds a key and a cipher block
 	
 	public void encrypt() {
-		byte[] plainBytes = plaintext.getBytes();
-		byte[][] block = new byte[4][4];
-		int count = 0;
-		for(int i = 0; i < block.length; i++) {
-			for(int k = 0; k < block.length; k++) {
-				if(count < plainBytes.length) {
-					block[i][k] = plainBytes[count];
-				}
-				count++;
-			}
+		
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	}
+	
 	//getters and setters
 	public void set_Plaintext(String plaintext) {
 		this.plaintext = plaintext;
@@ -81,14 +68,14 @@ public class AESCipher {
 	public String get_Plaintext() {
 		return this.plaintext;
 	}
-	
+		
 	public void set_Ciphertext(String ciphertext) {
 		this.ciphertext = ciphertext;
 	}
 	public String get_Ciphertext() {
 		return this.ciphertext;
 	}
-	
+		
 	public void set_Key(String key) {
 		this.key = key;
 	}
@@ -101,4 +88,65 @@ public class AESCipher {
 	
 	
 	
+	
+	
+	/*
+	 * test() methods
+	 * Methods intended for testing and verifying results
+	 * */
+	public void test_Cipher_Block(boolean testInput) {
+		
+		if(testInput) {
+			System.out.println("\nCurrent Block State: " + "\nTest input : abcdefghijklmnop" + 
+				"\n___________________________________________");
+		
+			this.stateBlock.test_input("abcdefghijklmnop");
+			this.stateBlock.test_Block();
+			
+		}else {
+			this.stateBlock.test_Block();
+		}
+		
+		
+	}
+	
+	public void test_SBoxes() {
+		System.out.println("S-BOX HEXADECIMAL VALUES");
+		System.out.println("___________________________________________");
+		for(int i = 0; i < this.sBox.length; i++) {
+			System.out.println();
+			for(int k = 0; k < this.sBox[i].length; k++) {
+				String hexS = Integer.toHexString(this.sBox[i][k]);
+				if(hexS.length() == 1) {
+					String hexFull = "0";
+					hexFull += hexS;
+					hexS = hexFull;
+				}
+				hexS = hexS.toUpperCase();
+				System.out.print(hexS);
+				System.out.print(" ");
+			}
+		}
+		System.out.println();
+		System.out.println("___________________________________________");
+		System.out.println();
+		
+		System.out.println("INVERSE-S-BOX HEXADECIMAL VALUES");
+		System.out.println("___________________________________________");
+		
+		for(int i = 0; i < this.isBox.length; i++) {
+			System.out.println();
+			for(int k = 0; k < this.isBox[i].length; k++) {
+				String hexS = Integer.toHexString(this.isBox[i][k]);
+				if(hexS.length() == 1) {
+					String hexFull = "0";
+					hexFull += hexS;
+					hexS = hexFull;
+				}
+				hexS = hexS.toUpperCase();
+				System.out.print(hexS);
+				System.out.print(" ");
+			}
+		}
+	}
 }
