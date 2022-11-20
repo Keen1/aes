@@ -106,8 +106,36 @@ public class AESCipher {
 		}else {
 			this.stateBlock.test_Block();
 		}
+		this.stateBlock = new CipherBlock();
+		
+	}
+	
+	public void test_Mix_Columns() {
+		System.out.println("\n");
+		System.out.println("\nCurrentBlock State: " + "\n___________________________________________");
 		
 		
+		this.stateBlock.test_input("YNJ>?-.&OP@!#KSL");
+		this.stateBlock.test_Block();
+		System.out.println("\n\nPerform mix columns operation");
+		this.stateBlock.mix_Columns();
+		System.out.println("\n");
+		System.out.println("\nCurrentBlock State: " + "\n___________________________________________");
+		this.stateBlock.test_Block();
+		
+	}
+	
+	public void test_Shift_Rows() {
+		this.stateBlock.test_input("123456789ABCDEFG");
+		
+		System.out.println("\nCurrentBlock State: " + "\n___________________________________________");
+		this.stateBlock.test_Block();
+		System.out.println("\nPerform shift rows operations");
+		this.stateBlock.shift_Rows();
+		System.out.println("\nCurrentBlock State: " + "\n___________________________________________");
+		this.stateBlock.test_Block();
+		
+		this.stateBlock = new CipherBlock();
 	}
 	
 	public void test_SBoxes() {
@@ -126,6 +154,7 @@ public class AESCipher {
 				System.out.print(hexS);
 				System.out.print(" ");
 			}
+			
 		}
 		System.out.println();
 		System.out.println("___________________________________________");
@@ -148,5 +177,7 @@ public class AESCipher {
 				System.out.print(" ");
 			}
 		}
+		this.stateBlock = new CipherBlock();
 	}
+	
 }
