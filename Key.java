@@ -44,6 +44,7 @@ public class Key {
 		}
 		keyMap.put(0, keyBlock);
 		
+		
 	}
 	private void gen_Key_Space() {
 		for(int i = 1; i <= 10; i++) {
@@ -67,7 +68,7 @@ public class Key {
 			newBlock[i] = this.generate_Word(newBlock, i);
 		}
 		keyMap.put(round, newBlock);
-		this.keyBlock = newBlock;
+		
 		
 	}
 	
@@ -151,14 +152,18 @@ public class Key {
 	private void set_Word(int[] newWord, int row) {
 		this.keyBlock[row] = newWord;
 	}
+	private void set_Current_State(int round) {
+		this.keyBlock = this.keyMap.get(round);
+	}
 	
 	
 	
 	/*testing functions*/
-	public void test_KeyBlock() {
-		System.out.println();
+	public void test_KeyBlock(int round) {
+		this.set_Current_State(round);
+		System.out.println("\n___________________________________________");
 		System.out.println("Current Key Block State: ");
-		System.out.println("___________________________________________");
+		
 		
 		for(int i = 0; i < this.keyBlock.length; i++) {
 			System.out.println();

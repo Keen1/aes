@@ -32,7 +32,7 @@ public class CipherBlock {
 	public String out_Block() {
 		StringBuilder outStr = new StringBuilder();
 		for(int i = 0; i < this.block.length; i++) {
-			for(int k = 3; k > -1; k--) {
+			for(int k = 0; k < this.block[i].length; k++) {
 				outStr.append((char)this.block[k][i]);
 			}
 		}
@@ -124,10 +124,10 @@ public class CipherBlock {
 				stateColumn[i] = this.mod_Prime_Poly((stateColumn[i] << 3)^(stateColumn[i] << 2)^(stateColumn[i] << 1));
 			}
 			if(scalarRow[i] == 13) {
-				stateColumn[i] = this.mod_Prime_Poly((stateColumn[i] << 3)^(stateColumn[i] << 2)^stateColumn[i]);
+				stateColumn[i] = this.mod_Prime_Poly((stateColumn[i] << 3)^((stateColumn[i] << 2)^stateColumn[i]));
 			}
 			if(scalarRow[i] == 11) {
-				stateColumn[i] = this.mod_Prime_Poly((stateColumn[i] << 3)^(stateColumn[i] << 1)^stateColumn[i]);
+				stateColumn[i] = this.mod_Prime_Poly((stateColumn[i] << 3)^((stateColumn[i] << 1)^stateColumn[i]));
 			}
 			if(scalarRow[i] == 9) {
 				stateColumn[i] = this.mod_Prime_Poly((stateColumn[i] << 3)^stateColumn[i]);
@@ -337,6 +337,9 @@ public class CipherBlock {
 	}
 	
 	public void test_Block() {
+		System.out.println("\n___________________________________________");
+		System.out.println("\nCurrent Block state: ");
+		
 		for(int i = 0; i < this.block.length; i++) {
 			System.out.println();
 			for(int k = 0; k < this.block[i].length; k++) {
